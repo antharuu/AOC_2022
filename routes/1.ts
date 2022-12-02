@@ -6,14 +6,21 @@ export const handler = async (_req: Request, _ctx: HandlerContext): Promise<Resp
     const groups: number[][] = await resp.json();
 
     // get an array of sums of each group
-    let sums = groups.map((group) =>
+    const sums = groups.map((group) =>
         group.reduce((num_1, num_2) => num_1 + num_2, 0));
 
+    // order the sums from greatest to least
+    sums.sort((a, b) => b - a);
+
     // get the greatest sum
-    let max: number = Math.max(...sums);
+    const maxTotal: number = Math.max(...sums);
+
+    // get the sum of the first 3 greatest sums
+    const maxThree: number = sums.slice(0, 3).reduce((num_1, num_2) => num_1 + num_2, 0);
 
     return new Response(JSON.stringify({
-        "max": max,
+        "max": maxTotal,
+        "max_three": maxThree,
     }), {
         status: 200,
         headers: {
