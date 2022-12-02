@@ -6,6 +6,7 @@ class Rock {
     name = "Rock";
     score = 1;
     winAgainst = "Scissors";
+    loseAgainst = "Paper";
 }
 
 class Paper {
@@ -14,6 +15,7 @@ class Paper {
     name = "Paper";
     score = 2;
     winAgainst = "Rock";
+    loseAgainst = "Scissors";
 }
 
 class Scissors {
@@ -22,18 +24,22 @@ class Scissors {
     name = "Scissors";
     score = 3;
     winAgainst = "Paper";
+    loseAgainst = "Rock";
 }
 
 function getHand(letter: string): Hand {
-    switch (letter.toUpperCase().trim()) {
+    switch (letter.trim()) {
         case Rock.enemyLetter:
         case Rock.playerLetter:
+        case "Rock":
             return new Rock();
         case Paper.enemyLetter:
         case Paper.playerLetter:
+        case "Paper":
             return new Paper();
         case Scissors.enemyLetter:
         case Scissors.playerLetter:
+        case "Scissors":
             return new Scissors();
     }
 
@@ -58,6 +64,20 @@ function getScore(enemyHand: Hand, playerHand: Hand) {
     return roundScore + playerHand.score;
 }
 
+function changePlayerHand(playerHandLetter: string, enemyHand: Hand): Hand {
+
+    switch (playerHandLetter.trim()) {
+        case "Rock":
+            return getHand(enemyHand.winAgainst);
+        case "Paper":
+            return getHand(enemyHand.name);
+        case "Scissors":
+            return getHand(enemyHand.loseAgainst);
+    }
+
+    throw new Error(`Invalid player hand letter: ${playerHandLetter}`);
+}
+
 export const handler = async (_req: Request, _ctx: HandlerContext): Promise<Response> => {
     const resp = await fetch(`http://localhost:8000/api/get_input/2`);
     if (resp.status === 404) return new Response("Not found", {status: 404});
@@ -65,6 +85,7 @@ export const handler = async (_req: Request, _ctx: HandlerContext): Promise<Resp
 
     // each line first character is the enemy's letter hand, and the last is the player's letter hand
     const scores: number[] = []
+    const scores2: number[] = []
 
     // for each line, calculate the score
     lines.forEach((line) => {
@@ -74,13 +95,16 @@ export const handler = async (_req: Request, _ctx: HandlerContext): Promise<Resp
         const playerHand = getHand(line[line.length - 1]);
 
         scores.push(getScore(enemyHand, playerHand));
+        scores2.push(getScore(enemyHand, changePlayerHand(playerHand.name, enemyHand)));
     });
 
-    // sum all the scores
-    const totalScore = scores.reduce((a, b) => a + b, 0);
+    // Get sum of each scores
+    const totalScores = scores.reduce((a, b) => a + b, 0);
+    const totalNewScores = scores2.reduce((a, b) => a + b, 0);
 
     return new Response(JSON.stringify({
-        totalScore
+        totalScores,
+        totalNewScores
     }), {
         status: 200,
         headers: {
