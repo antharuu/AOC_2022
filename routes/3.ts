@@ -49,6 +49,36 @@ function getScore(letters: string[]) {
     return score;
 }
 
+function getGroups(lines: string[]): string[][] {
+    const groups: string[][] = [];
+    let group: string[] = [];
+
+    [...lines, ""].forEach((line: string) => {
+        if (group.length === 3) {
+            groups.push(group);
+            group = [];
+        }
+        group.push(line);
+    });
+    return groups;
+}
+
+function getGroupsLetters(groups: string[][]): string[] {
+    const letters: string[] = [];
+    groups.forEach(group => {
+        // get the letter that appears in the all groups
+        const firstLetters = group[0].split('');
+        const secondLetters = group[1].split('');
+        const thirdLetters = group[2].split('');
+
+        // get the letter that appears in the all groups
+        const letter = firstLetters.find(letter => secondLetters.includes(letter) && thirdLetters.includes(letter));
+
+        letters.push(letter || '');
+    });
+    return letters;
+}
+
 export const handler = async (_req: Request, _ctx: HandlerContext): Promise<Response> => {
     const resp = await fetch(`http://localhost:8000/api/get_input/3`);
     if (resp.status === 404) return new Response("Not found", {status: 404});
@@ -57,10 +87,15 @@ export const handler = async (_req: Request, _ctx: HandlerContext): Promise<Resp
     const compartments = getCompartments(lines);
     const letters = getCompartmentsLetters(compartments);
 
+    const groups = getGroups(lines);
+    const groupsLetters = getGroupsLetters(groups);
+
     const result = getScore(letters);
+    const resultGroups = getScore(groupsLetters);
 
     return new Response(JSON.stringify({
-        "result": result
+        result,
+        resultGroups
     }), {
         status: 200,
         headers: {
