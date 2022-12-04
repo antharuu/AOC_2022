@@ -6,9 +6,11 @@ import config from "./deno.json" assert { type: "json" };
 import * as $0 from "./routes/1.ts";
 import * as $1 from "./routes/2.ts";
 import * as $2 from "./routes/3.ts";
-import * as $3 from "./routes/api/get_input/1.ts";
-import * as $4 from "./routes/api/get_input/2.ts";
-import * as $5 from "./routes/api/get_input/3.ts";
+import * as $3 from "./routes/4.ts";
+import * as $4 from "./routes/api/get_input/1.ts";
+import * as $5 from "./routes/api/get_input/2.ts";
+import * as $6 from "./routes/api/get_input/3.ts";
+import * as $7 from "./routes/api/get_input/4.ts";
 import * as $$0 from "./islands/Counter.tsx";
 
 const manifest = {
@@ -16,9 +18,11 @@ const manifest = {
     "./routes/1.ts": $0,
     "./routes/2.ts": $1,
     "./routes/3.ts": $2,
-    "./routes/api/get_input/1.ts": $3,
-    "./routes/api/get_input/2.ts": $4,
-    "./routes/api/get_input/3.ts": $5,
+    "./routes/4.ts": $3,
+    "./routes/api/get_input/1.ts": $4,
+    "./routes/api/get_input/2.ts": $5,
+    "./routes/api/get_input/3.ts": $6,
+    "./routes/api/get_input/4.ts": $7,
   },
   islands: {
     "./islands/Counter.tsx": $$0,
