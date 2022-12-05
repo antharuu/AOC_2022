@@ -8,7 +8,7 @@ const getLinesArray = (lines: { start: number; end: number }[][]) => lines.map(
     )
 );
 
-function getFullyContainedPairs(linesArray: number[][]): number {
+function getFullyContainedPairs(linesArray: number[][][]): number {
     let count = 0;
 
     linesArray.forEach((pairs) => {
@@ -27,7 +27,7 @@ function getFullyContainedPairs(linesArray: number[][]): number {
     return count;
 }
 
-function getOverlappingPairs(linesArray: number[][]): number {
+function getOverlappingPairs(linesArray: number[][][]): number {
     let count = 0;
 
     linesArray.forEach((pairs) => {
@@ -46,9 +46,9 @@ function getOverlappingPairs(linesArray: number[][]): number {
 export const handler = async (_req: Request, _ctx: HandlerContext): Promise<Response> => {
     const resp = await fetch(`http://localhost:8000/api/get_input/4`);
     if (resp.status === 404) return new Response("Not found", {status: 404});
-    let lines: { start: number, end: number }[][] = await resp.json();
+    const lines: { start: number, end: number }[][] = await resp.json();
 
-    const linesArray: number[][] = getLinesArray(lines);
+    const linesArray: number[][][] = getLinesArray(lines);
 
     const result = getFullyContainedPairs(linesArray);
     const result2 = getOverlappingPairs(linesArray);
