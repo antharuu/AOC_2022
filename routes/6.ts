@@ -1,7 +1,7 @@
 import {HandlerContext} from "https://deno.land/x/rutt@0.0.13/mod.ts";
 
 // get the 4 chars after the offset
-const getSection = (line: string, offset: number) => line.substr(offset, 4);
+const getSection = (line: string, offset: number, length: number) => line.substr(offset, length);
 
 // check if the section has 2 times the same char in all 4 chars
 function hasDoubleChar(section: string) {
@@ -17,14 +17,14 @@ function hasDoubleChar(section: string) {
     return hasDouble;
 }
 
-function getFirstCharSection(line: string) {
+function getFirstCharSection(line: string, length: number) {
     let offset = 0;
-    let section = getSection(line, offset);
+    let section = getSection(line, offset, length);
     while (hasDoubleChar(section)) {
         offset++;
-        section = getSection(line, offset);
+        section = getSection(line, offset, length);
     }
-    return offset + 4;
+    return offset + length;
 }
 
 export const handler = async (_req: Request, _ctx: HandlerContext): Promise<Response> => {
@@ -32,10 +32,12 @@ export const handler = async (_req: Request, _ctx: HandlerContext): Promise<Resp
     if (resp.status === 404) return new Response("Not found", {status: 404});
     const {line}: { line: string } = await resp.json();
 
-    const first = getFirstCharSection(line);
+    const first = getFirstCharSection(line, 4);
+    const second = getFirstCharSection(line, 14);
 
     return new Response(JSON.stringify({
-        first
+        first,
+        second
     }), {
         status: 200,
         headers: {
