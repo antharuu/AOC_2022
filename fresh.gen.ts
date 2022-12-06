@@ -8,11 +8,13 @@ import * as $1 from "./routes/2.ts";
 import * as $2 from "./routes/3.ts";
 import * as $3 from "./routes/4.ts";
 import * as $4 from "./routes/5.ts";
-import * as $5 from "./routes/api/get_input/1.ts";
-import * as $6 from "./routes/api/get_input/2.ts";
-import * as $7 from "./routes/api/get_input/3.ts";
-import * as $8 from "./routes/api/get_input/4.ts";
-import * as $9 from "./routes/api/get_input/5.ts";
+import * as $5 from "./routes/6.ts";
+import * as $6 from "./routes/api/get_input/1.ts";
+import * as $7 from "./routes/api/get_input/2.ts";
+import * as $8 from "./routes/api/get_input/3.ts";
+import * as $9 from "./routes/api/get_input/4.ts";
+import * as $10 from "./routes/api/get_input/5.ts";
+import * as $11 from "./routes/api/get_input/6.ts";
 import * as $$0 from "./islands/Counter.tsx";
 
 const manifest = {
@@ -22,11 +24,13 @@ const manifest = {
     "./routes/3.ts": $2,
     "./routes/4.ts": $3,
     "./routes/5.ts": $4,
-    "./routes/api/get_input/1.ts": $5,
-    "./routes/api/get_input/2.ts": $6,
-    "./routes/api/get_input/3.ts": $7,
-    "./routes/api/get_input/4.ts": $8,
-    "./routes/api/get_input/5.ts": $9,
+    "./routes/6.ts": $5,
+    "./routes/api/get_input/1.ts": $6,
+    "./routes/api/get_input/2.ts": $7,
+    "./routes/api/get_input/3.ts": $8,
+    "./routes/api/get_input/4.ts": $9,
+    "./routes/api/get_input/5.ts": $10,
+    "./routes/api/get_input/6.ts": $11,
   },
   islands: {
     "./islands/Counter.tsx": $$0,
