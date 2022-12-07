@@ -60,7 +60,6 @@ function getFolders(files: File[]): Folders {
                 const p = paths.slice(0, index + 1).join("/");
                 if (!folders[p]) folders[p] = 0;
                 folders[p] += file.size;
-                console.log(file.path, p, folders[p]);
             })
         }
 
