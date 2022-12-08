@@ -124,6 +124,94 @@ function getVisibleOutsideTrees(trees: Forest): TreeList {
     return list;
 }
 
+function getTreesTop(trees: Forest, x: number, y: number): Tree[] {
+    const treesTop: Tree[] = [];
+
+    let iY = 0;
+    while (iY < y) {
+        treesTop.push(getTree(trees, x, iY));
+        iY++;
+    }
+
+    return treesTop.reverse();
+}
+
+function getTreesLeft(trees: Forest, x: number, y: number): Tree[] {
+    const treesLeft: Tree[] = [];
+
+    let iX = 0;
+    while (iX < x) {
+        treesLeft.push(getTree(trees, iX, y));
+        iX++;
+    }
+
+    return treesLeft.reverse();
+}
+
+function getTreesRight(trees: Forest, x: number, y: number): Tree[] {
+    const treesRight: Tree[] = [];
+
+    let iX = x + 1;
+    while (iX < trees[y].length) {
+        treesRight.push(getTree(trees, iX, y));
+        iX++;
+    }
+
+    return treesRight;
+}
+
+function getTreesBottom(trees: Forest, x: number, y: number): Tree[] {
+    const treesBottom: Tree[] = [];
+
+    let iY = y + 1;
+    while (iY < trees.length) {
+        treesBottom.push(getTree(trees, x, iY));
+        iY++;
+    }
+
+    return treesBottom;
+}
+
+function keepVisible(mainTree: Tree, treesList: Tree[]): Tree[] {
+    let lastTree = -1,
+        broken = false;
+    const visible: Tree[] = [];
+
+    treesList.forEach((tree, i) => {
+        if (broken) return;
+        if (tree >= mainTree) {
+            visible.push(tree);
+            broken = true;
+            return;
+        }
+
+        visible.push(tree);
+
+        if (tree < lastTree) return;
+
+        lastTree = tree;
+    });
+
+    return visible;
+}
+
+function getViewableTrees(trees: Forest) {
+    let countVisible: { [pos: string]: number } = {};
+
+    trees.forEach((row, y) => {
+        row.forEach((tree, x) => {
+            const top = keepVisible(tree, getTreesTop(trees, x, y));
+            const left = keepVisible(tree, getTreesLeft(trees, x, y));
+            const bottom = keepVisible(tree, getTreesBottom(trees, x, y));
+            const right = keepVisible(tree, getTreesRight(trees, x, y));
+
+            countVisible[`${x},${y}`] = top.length * left.length * bottom.length * right.length;
+        });
+    });
+
+    return countVisible;
+}
+
 export const handler = async (_req: Request, _ctx: HandlerContext): Promise<Response> => {
     const resp = await fetch(`http://localhost:8000/api/get_input/8`);
     if (resp.status === 404) return new Response("Not found", {status: 404});
@@ -132,11 +220,15 @@ export const handler = async (_req: Request, _ctx: HandlerContext): Promise<Resp
     const trees: Forest = getForest(lines);
 
     const visibleOutsideTrees = getVisibleOutsideTrees(trees);
+    const viewableTrees = getViewableTrees(trees);
 
     const count = Object.keys(visibleOutsideTrees).length;
 
+    const max = Object.values(viewableTrees).reduce((a, b) => Math.max(a, b));
+
     return new Response(JSON.stringify({
-        count
+        count,
+        max
     }), {
         status: 200,
         headers: {
