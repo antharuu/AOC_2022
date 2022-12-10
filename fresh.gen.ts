@@ -4,41 +4,49 @@
 
 import config from "./deno.json" assert { type: "json" };
 import * as $0 from "./routes/1.ts";
-import * as $1 from "./routes/2.ts";
-import * as $2 from "./routes/3.ts";
-import * as $3 from "./routes/4.ts";
-import * as $4 from "./routes/5.ts";
-import * as $5 from "./routes/6.ts";
-import * as $6 from "./routes/7.ts";
-import * as $7 from "./routes/8.ts";
-import * as $8 from "./routes/input/1.ts";
-import * as $9 from "./routes/input/2.ts";
-import * as $10 from "./routes/input/3.ts";
-import * as $11 from "./routes/input/4.ts";
-import * as $12 from "./routes/input/5.ts";
-import * as $13 from "./routes/input/6.ts";
-import * as $14 from "./routes/input/7.ts";
-import * as $15 from "./routes/input/8.ts";
+import * as $1 from "./routes/10.ts";
+import * as $2 from "./routes/2.ts";
+import * as $3 from "./routes/3.ts";
+import * as $4 from "./routes/4.ts";
+import * as $5 from "./routes/5.ts";
+import * as $6 from "./routes/6.ts";
+import * as $7 from "./routes/7.ts";
+import * as $8 from "./routes/8.ts";
+import * as $9 from "./routes/9.ts";
+import * as $10 from "./routes/input/1.ts";
+import * as $11 from "./routes/input/10.ts";
+import * as $12 from "./routes/input/2.ts";
+import * as $13 from "./routes/input/3.ts";
+import * as $14 from "./routes/input/4.ts";
+import * as $15 from "./routes/input/5.ts";
+import * as $16 from "./routes/input/6.ts";
+import * as $17 from "./routes/input/7.ts";
+import * as $18 from "./routes/input/8.ts";
+import * as $19 from "./routes/input/9.ts";
 import * as $$0 from "./islands/Counter.tsx";
 
 const manifest = {
   routes: {
     "./routes/1.ts": $0,
-    "./routes/2.ts": $1,
-    "./routes/3.ts": $2,
-    "./routes/4.ts": $3,
-    "./routes/5.ts": $4,
-    "./routes/6.ts": $5,
-    "./routes/7.ts": $6,
-    "./routes/8.ts": $7,
-    "./routes/input/1.ts": $8,
-    "./routes/input/2.ts": $9,
-    "./routes/input/3.ts": $10,
-    "./routes/input/4.ts": $11,
-    "./routes/input/5.ts": $12,
-    "./routes/input/6.ts": $13,
-    "./routes/input/7.ts": $14,
-    "./routes/input/8.ts": $15,
+    "./routes/10.ts": $1,
+    "./routes/2.ts": $2,
+    "./routes/3.ts": $3,
+    "./routes/4.ts": $4,
+    "./routes/5.ts": $5,
+    "./routes/6.ts": $6,
+    "./routes/7.ts": $7,
+    "./routes/8.ts": $8,
+    "./routes/9.ts": $9,
+    "./routes/input/1.ts": $10,
+    "./routes/input/10.ts": $11,
+    "./routes/input/2.ts": $12,
+    "./routes/input/3.ts": $13,
+    "./routes/input/4.ts": $14,
+    "./routes/input/5.ts": $15,
+    "./routes/input/6.ts": $16,
+    "./routes/input/7.ts": $17,
+    "./routes/input/8.ts": $18,
+    "./routes/input/9.ts": $19,
   },
   islands: {
     "./islands/Counter.tsx": $$0,

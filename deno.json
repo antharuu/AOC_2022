@@ -1,6 +1,8 @@
 {
   "tasks": {
-    "start": "deno run -A --watch=static/,routes/ dev.ts --allow-env"
+    "start": "deno run -A --watch=static/,routes/ dev.ts",
+    "test": "deno task start --test",
+    "free": "sudo kill -9 $(sudo lsof -t -i:8000)"
   },
   "importMap": "./import_map.json",
   "compilerOptions": {
