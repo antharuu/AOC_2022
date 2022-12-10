@@ -1,4 +1,5 @@
 import {HandlerContext} from "https://deno.land/x/rutt@0.0.13/mod.ts";
+import {Input} from "../src/Input.ts";
 
 
 const getLinesArray = (lines: { start: number; end: number }[][]) => lines.map(
@@ -43,10 +44,10 @@ function getOverlappingPairs(linesArray: number[][][]): number {
     return count;
 }
 
+type Lines = { start: number, end: number }[][];
+
 export const handler = async (_req: Request, _ctx: HandlerContext): Promise<Response> => {
-    const resp = await fetch(`http://localhost:8000/api/get_input/4`);
-    if (resp.status === 404) return new Response("Not found", {status: 404});
-    const lines: { start: number, end: number }[][] = await resp.json();
+    const lines: Lines = await Input.getData(4) as Lines;
 
     const linesArray: number[][][] = getLinesArray(lines);
 

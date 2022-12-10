@@ -1,4 +1,5 @@
 import {HandlerContext} from "https://deno.land/x/rutt@0.0.13/mod.ts";
+import {Input} from "../src/Input.ts";
 
 type Column = string[];
 
@@ -20,13 +21,10 @@ function rearrange(columns: Column[], instructions: Instruction[], reverse = tru
     return columns;
 }
 
+type ColInstr = { columns: Column[], instructions: Instruction[] };
+
 export const handler = async (_req: Request, _ctx: HandlerContext): Promise<Response> => {
-    const resp = await fetch(`http://localhost:8000/api/get_input/5`);
-    if (resp.status === 404) return new Response("Not found", {status: 404});
-    const {
-        columns,
-        instructions
-    }: { columns: Column[], instructions: Instruction[] } = await resp.json();
+    const {columns, instructions}: ColInstr = await Input.getData(5) as ColInstr;
 
     // create a copy of the columns
     const columns2 = JSON.parse(JSON.stringify(columns));

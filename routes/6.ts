@@ -1,4 +1,5 @@
 import {HandlerContext} from "https://deno.land/x/rutt@0.0.13/mod.ts";
+import {Input} from "../src/Input.ts";
 
 // get the 4 chars after the offset
 const getSection = (line: string, offset: number, length: number) => line.substr(offset, length);
@@ -28,9 +29,7 @@ function getFirstCharSection(line: string, length: number) {
 }
 
 export const handler = async (_req: Request, _ctx: HandlerContext): Promise<Response> => {
-    const resp = await fetch(`http://localhost:8000/api/get_input/6`);
-    if (resp.status === 404) return new Response("Not found", {status: 404});
-    const {line}: { line: string } = await resp.json();
+    const {line}: { line: string } = await Input.getData(6) as { line: string };
 
     const first = getFirstCharSection(line, 4);
     const second = getFirstCharSection(line, 14);

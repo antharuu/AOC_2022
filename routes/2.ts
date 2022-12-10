@@ -1,4 +1,5 @@
 import {HandlerContext} from "https://deno.land/x/rutt@0.0.13/mod.ts";
+import {Input} from "../src/Input.ts";
 
 class Rock {
     static enemyLetter = "A";
@@ -79,9 +80,7 @@ function changePlayerHand(playerHandLetter: string, enemyHand: Hand): Hand {
 }
 
 export const handler = async (_req: Request, _ctx: HandlerContext): Promise<Response> => {
-    const resp = await fetch(`http://localhost:8000/api/get_input/2`);
-    if (resp.status === 404) return new Response("Not found", {status: 404});
-    let lines: string[] = await resp.json();
+    let lines: string[] = await Input.getData(2) as string[];
 
     // each line first character is the enemy's letter hand, and the last is the player's letter hand
     const scores: number[] = []

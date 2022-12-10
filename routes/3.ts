@@ -1,4 +1,5 @@
 import {HandlerContext} from "https://deno.land/x/rutt@0.0.13/mod.ts";
+import {Input} from "../src/Input.ts";
 
 const Letters = [
     "a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m",
@@ -80,9 +81,7 @@ function getGroupsLetters(groups: string[][]): string[] {
 }
 
 export const handler = async (_req: Request, _ctx: HandlerContext): Promise<Response> => {
-    const resp = await fetch(`http://localhost:8000/api/get_input/3`);
-    if (resp.status === 404) return new Response("Not found", {status: 404});
-    let lines: string[] = await resp.json();
+    let lines: string[] = await Input.getData(3) as string[];
 
     const compartments = getCompartments(lines);
     const letters = getCompartmentsLetters(compartments);

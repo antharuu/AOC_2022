@@ -1,13 +1,14 @@
 import {HandlerContext} from "https://deno.land/x/rutt@0.0.13/mod.ts";
+import {Input} from "../../src/Input.ts";
 
 export const handler = async (_req: Request, _ctx: HandlerContext): Promise<Response> => {
 
-    const resp = await fetch(`file:///C:/Users/Death/projects/aoc_2022/assets/5.txt`);
-    if (resp.status === 404) return new Response("Not found", {status: 404});
-    const data: string = await resp.text();
+    const data = await Input.get(5);
+
+    const NL = "\n";
 
     // get lines
-    const [_, lines]: string[] = data.split("\r\n\r\n");
+    const [_, lines]: string[] = data.split(NL + NL);
 
     const columns: string[][] = [
         ["N", "R", "G", "P"],
@@ -21,7 +22,7 @@ export const handler = async (_req: Request, _ctx: HandlerContext): Promise<Resp
         ["R", "P", "F", "L", "W", "G", "Z"]
     ]
 
-    const instructions: { move: number, from: number, to: number }[] = lines.split("\r\n")
+    const instructions: { move: number, from: number, to: number }[] = lines.split(NL)
         .map((line) => line.trim())
         .filter((line) => line.length > 0)
         .map((line: string) => {

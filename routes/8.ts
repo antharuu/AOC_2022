@@ -1,4 +1,5 @@
 import {HandlerContext} from "https://deno.land/x/rutt@0.0.13/mod.ts";
+import {Input} from "../src/Input.ts";
 
 type Tree = number;
 type Forest = Tree[][];
@@ -213,9 +214,7 @@ function getViewableTrees(trees: Forest) {
 }
 
 export const handler = async (_req: Request, _ctx: HandlerContext): Promise<Response> => {
-    const resp = await fetch(`http://localhost:8000/api/get_input/8`);
-    if (resp.status === 404) return new Response("Not found", {status: 404});
-    const lines: string[] = await resp.json();
+    const lines: string[] = await Input.getData(8) as string[];
 
     const trees: Forest = getForest(lines);
 
